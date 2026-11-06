@@ -1,0 +1,55 @@
+class Producto {
+    String nombre;
+    double precio;
+    int stock;
+
+    public Producto(String nombre, double precio, int stock) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = stock;
+    }
+
+    public void reducirStock(int cantidad) {
+        if (cantidad <= stock) {
+            stock -= cantidad;
+        } else {
+            System.out.println("Stock insuficiente.");
+        }
+    }
+
+    public void mostrarProducto() {
+        System.out.println("Producto: " + nombre + " | Precio: $" + precio + " | Stock disponible: " + stock);
+    }
+}
+
+class Venta {
+    int cantidad;
+
+    public Venta(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void aplicar(Producto producto) {
+        if (cantidad <= producto.stock) {
+            double totalPagar = cantidad * producto.precio;
+            producto.reducirStock(cantidad);
+            System.out.println("Venta procesada con éxito.");
+            System.out.println("Total a pagar: $" + totalPagar);
+            producto.mostrarProducto();
+        } else {
+            System.out.println("No se pudo realizar la venta.");
+            producto.reducirStock(cantidad); 
+        }
+    }
+}
+
+public class MainEjercicio3 {
+    public static void main(String[] args) {
+        Producto producto = new Producto("Laptop", 750.0, 3);
+        producto.mostrarProducto();
+
+        System.out.println("\n--- Aplicando Venta ---");
+        Venta venta = new Venta(2);
+        venta.aplicar(producto);
+    }
+}
