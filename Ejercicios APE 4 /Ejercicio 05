@@ -1,0 +1,67 @@
+class Usuario {
+    String nombre;
+    String cedula;
+
+    public Usuario(String nombre, String cedula) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+    }
+}
+
+class Libro {
+    String titulo;
+    boolean disponible;
+
+    public Libro(String titulo, boolean disponible) {
+        this.titulo = titulo;
+        this.disponible = disponible;
+    }
+
+    public boolean prestar() {
+        if (disponible) {
+            disponible = false;
+            return true;
+        }
+        return false;
+    }
+
+    public void devolver() {
+        disponible = true;
+    }
+}
+
+class Prestamo {
+    Usuario usuario;
+    Libro libro;
+
+    public Prestamo(Usuario usuario, Libro libro) {
+        this.usuario = usuario;
+        this.libro = libro;
+    }
+
+    public void registrar() {
+        boolean exito = libro.prestar();
+        if (exito) {
+            System.out.println("Éxito: El libro \"" + libro.titulo + "\" ha sido prestado a " + usuario.nombre + ".");
+        } else {
+            System.out.println("Aviso: El libro \"" + libro.titulo + "\" no está disponible. Préstamo denegado para " + usuario.nombre + ".");
+        }
+    }
+}
+
+public class MainEjercicio5 {
+    public static void main(String[] args) {
+        Libro libroUnico = new Libro("Estructuras de Datos", true);
+
+        Usuario usuario1 = new Usuario("Mateo", "1801112223");
+        Usuario usuario2 = new Usuario("Lucía", "1803334445");
+
+        System.out.println("--- Intento del Usuario 1 ---");
+        Prestamo prestamo1 = new Prestamo(usuario1, libroUnico);
+        prestamo1.registrar();
+
+        System.out.println("\n--- Intento del Usuario 2 con el mismo libro ---");
+        Prestamo prestamo2 = new Prestamo(usuario2, libroUnico);
+        prestamo2.registrar();
+    }
+}
